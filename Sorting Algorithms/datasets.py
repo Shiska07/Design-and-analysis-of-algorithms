@@ -16,22 +16,15 @@ def get_int_array(n):
 
 def read_file(filename):
     try:
-        f = open(filename, 'rb')
+        f = open(filename, 'r')
     except OSError:
         print(f"Could not open/read file: {filename}")
         sys.exit()
 
     line = str(f.readline())
-    line = line.strip('\r\n')
     int_list = line.split(',')
     arr = np.zeros(len(int_list), dtype=np.int32)
     for i, item in enumerate(int_list):
+        item = item.strip('\r\n')
         arr[i] = np.int32(item)
-    '''
-    for i, item in enumerate(int_list):
-        try:
-            arr[i] = np.int32(item)
-        except ValueError:
-            print(item, "\n")
-    '''
     return arr
