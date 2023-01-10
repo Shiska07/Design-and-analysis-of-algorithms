@@ -10,7 +10,7 @@ if __name__ == "__main__":
         arr = datasets.read_file(res)
 
     algo = input(
-        "Pick a sorting algorithm from 1) insersion\n 2) merge\n 3) quicksort\n 4) heapsort")
+        "Pick a sorting algorithm from 1) insersion\n 2) merge\n 3) quicksort\n 4) heapsort\n")
 
     if int(algo) == 1:
         sorting_algorithms.insertion_sort(arr)
