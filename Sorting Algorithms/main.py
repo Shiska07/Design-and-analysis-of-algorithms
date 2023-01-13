@@ -11,18 +11,16 @@ if __name__ == "__main__":
         arr = datasets.read_file(res)
 
     algo = input(
-        "Pick a sorting algorithm from:\n 1) insersion\n 2) merge\n 3) quicksort\n 4) heapsort\n")
+        "Pick a sorting algorithm from:\n 1) insersion\n 2) heap sort\n 3) quicksort\n")
 
     start = time.monotonic()
 
     if int(algo) == 1:
         sorting_algorithms.insertion_sort(arr)
     elif int(algo) == 2:
-        sorting_algorithms.merge_sort(arr, 0, len(arr))
+        sorting_algorithms.heap_sort(arr)
     elif int(algo) == 3:
         sorting_algorithms.quick_sort(arr)
-    else:
-        sorting_algorithms.heap_sort(arr)
 
     end = time.monotonic()
 

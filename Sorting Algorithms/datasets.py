@@ -23,7 +23,7 @@ def read_file(filename):
 
     line = str(f.readline())
     int_list = line.split(',')
-    arr = []*len(int_list)
+    arr = [0]*len(int_list)
     for i, item in enumerate(int_list):
         item = item.strip('\r\n')
         arr[i] = np.int32(item)
