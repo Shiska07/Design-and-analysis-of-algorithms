@@ -6,7 +6,7 @@ import sys
 
 
 def get_int_array(n):
-    arr = np.zeros(n, dtype=np.int32)
+    arr = [0]*n
     for i in range(0, n):
         arr[i] = random.randint(-99999, 99999)
     return arr
@@ -23,7 +23,7 @@ def read_file(filename):
 
     line = str(f.readline())
     int_list = line.split(',')
-    arr = np.zeros(len(int_list), dtype=np.int32)
+    arr = []*len(int_list)
     for i, item in enumerate(int_list):
         item = item.strip('\r\n')
         arr[i] = np.int32(item)
