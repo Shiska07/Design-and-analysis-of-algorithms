@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 
 def insertion_sort(arr):
@@ -12,10 +13,15 @@ def insertion_sort(arr):
         arr[i + 1] = key
     print(arr)
 
+def merge(arr, p, q, r):
+    n1 = 
 
-def merge_sort(arr):
-    pass
-
+def merge_sort(arr, p, r):
+    if p < r:
+        q = math.floor((p + r)/2)
+        merge_sort(arr, p, q)
+        merge_sort(arr, q+1, r)
+        merge(arr, p, q, r)
 
 def quick_sort(arr):
     pass
