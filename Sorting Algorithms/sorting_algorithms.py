@@ -1,9 +1,8 @@
 import numpy as np
 import math
+import random
 
 # O(n^2)
-
-
 def insertion_sort(arr):
     length = len(arr)
     for j in range(1, length):
@@ -16,8 +15,6 @@ def insertion_sort(arr):
     print(arr)
 
 # O(lg(n))
-
-
 def min_heapify(arr, idx):
     l = 2*idx + 1           # left child
     r = 2*idx + 2           # right child
@@ -40,8 +37,6 @@ def min_heapify(arr, idx):
     return arr
 
 # O(lg(n))
-
-
 def build_min_heap(arr):
     heap_size = len(arr)
     i = math.floor((heap_size - 2)/2)
@@ -52,8 +47,6 @@ def build_min_heap(arr):
     return arr
 
 # O(nlg(n))
-
-
 def heap_sort(arr):
     arr = build_min_heap(arr)
     i = len(arr) - 1
@@ -69,6 +62,34 @@ def heap_sort(arr):
 
     print(sorted_arr)
 
-
-def quick_sort(arr):
-    pass
+def randomized_partition(arr, p, r):
+    
+    # get a random index
+    i = random.randint(0,len(arr))
+    
+    # exchange last value with value at random index
+    pivot = arr[i]
+    arr[i] = arr[-1]
+    arr[-1] = pivot
+    
+    i = p - 1
+    j = p
+    while j <= (r - 1):
+        if arr[j] <= pivot:
+            i += 1
+            key = arr[i]
+            arr[i] = arr[j]
+            arr[j] = key
+    arr[r] = arr[i+1]
+    arr[i+1] = pivot
+    return arr, i + 1            
+    
+    
+def quick_sort(arr, p, r):
+    if p < r:
+        arr, q = randomized_partition(arr, p, r)
+        arr = quick_sort(arr, p, q-1)
+        arr = quick_sort(arr, q, r)
+    
+    print(arr)
+    

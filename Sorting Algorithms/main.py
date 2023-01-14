@@ -20,7 +20,7 @@ if __name__ == "__main__":
     elif int(algo) == 2:
         sorting_algorithms.heap_sort(arr)
     elif int(algo) == 3:
-        sorting_algorithms.quick_sort(arr)
+        sorting_algorithms.quick_sort(arr, 0, (len(arr) - 1))
 
     end = time.monotonic()
 
