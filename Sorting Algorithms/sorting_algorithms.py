@@ -2,19 +2,8 @@ import numpy as np
 import math
 import random
 
-# O(n^2)
-def insertion_sort(arr):
-    length = len(arr)
-    for j in range(1, length):
-        key = arr[j]
-        i = j - 1
-        while (i >= 0) & (arr[i] > key):
-            arr[i + 1] = arr[i]
-            i = i - 1
-        arr[i + 1] = key
-    print(arr)
-
-# O(lg(n))
+# Helper function fot heap sort helps value float down
+# Running time : O(lg(n))
 def min_heapify(arr, idx):
     l = 2*idx + 1           # left child
     r = 2*idx + 2           # right child
@@ -36,7 +25,8 @@ def min_heapify(arr, idx):
 
     return arr
 
-# O(lg(n))
+# Helper function fot heap sort helps build heap
+# Running time : O(lg(n))
 def build_min_heap(arr):
     heap_size = len(arr)
     i = math.floor((heap_size - 2)/2)
@@ -45,6 +35,42 @@ def build_min_heap(arr):
         arr = min_heapify(arr, i)
         i -= 1
     return arr
+
+# Helper function for quicksort
+# Running time : O(n)
+def randomized_partition(arr, p, r):
+
+    # get a random index
+    r_i = random.randint(p, r)
+
+    # exchange last value with value at random index
+    pivot = arr[r_i]
+    arr[r_i] = arr[r]
+    arr[r] = pivot
+
+    i = p - 1
+    j = p
+    while j <= (r - 1):
+        if arr[j] <= pivot:
+            i += 1
+            (arr[i], arr[j]) = (arr[j], arr[i])
+        j += 1
+    (arr[i+1], arr[r]) = (arr[r], arr[i+1])
+    return arr, i + 1
+
+
+# O(n^2)
+def insertion_sort(arr):
+    length = len(arr)
+    for j in range(1, length):
+        key = arr[j]
+        i = j - 1
+        while (i >= 0) & (arr[i] > key):
+            arr[i + 1] = arr[i]
+            i = i - 1
+        arr[i + 1] = key
+    print(arr)
+
 
 # O(nlg(n))
 def heap_sort(arr):
@@ -60,29 +86,10 @@ def heap_sort(arr):
         i -= 1
         j += 1
 
-    print(sorted_arr)
-
-def randomized_partition(arr, p, r):
-    
-    # get a random index
-    r_i = random.randint(p,r)
-    
-    # exchange last value with value at random index
-    pivot = arr[r_i]
-    arr[r_i] = arr[r]
-    arr[r] = pivot
-    
-    i = p - 1
-    j = p
-    while j <= (r - 1):
-        if arr[j] <= pivot:
-            i += 1
-            (arr[i], arr[j]) = (arr[j], arr[i])
-        j += 1
-    (arr[i+1], arr[r]) = (arr[r], arr[i+1])
-    return arr, i + 1            
+    print(sorted_arr)         
     
     
+# O(nlog(n)) average   
 def quick_sort(arr, p, r):
     if p < r:
         arr, q = randomized_partition(arr, p, r)
