@@ -1,6 +1,14 @@
 import numpy as np
 import math
 import random
+import csv
+
+# saves sorted array as a .csv file
+def save_sorted_arr(arr):
+    with open(r'sorted_array.txt', 'w') as fp:
+        csv_writer = csv.writer(fp)
+        csv_writer.writerow(arr)
+        
 
 # Helper function fot heap sort helps value float down
 # Running time : O(lg(n))
@@ -69,7 +77,8 @@ def insertion_sort(arr):
             arr[i + 1] = arr[i]
             i = i - 1
         arr[i + 1] = key
-    print(arr)
+    
+    save_sorted_arr(arr)
 
 
 # O(nlg(n))
@@ -86,7 +95,7 @@ def heap_sort(arr):
         i -= 1
         j += 1
 
-    print(sorted_arr)         
+    save_sorted_arr(arr)         
     
     
 # O(nlog(n)) average   

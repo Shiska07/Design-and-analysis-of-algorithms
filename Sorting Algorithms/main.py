@@ -21,7 +21,7 @@ if __name__ == "__main__":
         sorting_algorithms.heap_sort(arr)
     elif int(algo) == 3:
         arr = sorting_algorithms.quick_sort(arr, 0, (len(arr) - 1))
-        print(arr)
+        sorting_algorithms.save_sorted_arr(arr)
 
     end = time.monotonic()
 
