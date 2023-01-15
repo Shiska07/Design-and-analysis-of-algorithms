@@ -65,23 +65,21 @@ def heap_sort(arr):
 def randomized_partition(arr, p, r):
     
     # get a random index
-    i = random.randint(0,len(arr))
+    r_i = random.randint(p,r)
     
     # exchange last value with value at random index
-    pivot = arr[i]
-    arr[i] = arr[-1]
-    arr[-1] = pivot
+    pivot = arr[r_i]
+    arr[r_i] = arr[r]
+    arr[r] = pivot
     
     i = p - 1
     j = p
     while j <= (r - 1):
         if arr[j] <= pivot:
             i += 1
-            key = arr[i]
-            arr[i] = arr[j]
-            arr[j] = key
-    arr[r] = arr[i+1]
-    arr[i+1] = pivot
+            (arr[i], arr[j]) = (arr[j], arr[i])
+        j += 1
+    (arr[i+1], arr[r]) = (arr[r], arr[i+1])
     return arr, i + 1            
     
     
@@ -89,7 +87,7 @@ def quick_sort(arr, p, r):
     if p < r:
         arr, q = randomized_partition(arr, p, r)
         arr = quick_sort(arr, p, q-1)
-        arr = quick_sort(arr, q, r)
+        arr = quick_sort(arr, q+1, r)
     
-    print(arr)
+    return arr
     
