@@ -1,4 +1,4 @@
-def gcdOfStrings(str1,str2):
+def lcsOfStrings(str1,str2):
     longest = ""
     sub_str = ""
     if len(str1) >= len(str2):
@@ -29,5 +29,5 @@ def gcdOfStrings(str1,str2):
 if __name__ == "__main__":
     str1 = "MABABABN"
     str2 = "XABABY"
-    print(gcdOfStrings(str1, str2))
+    print(lcsOfStrings(str1, str2))
     
