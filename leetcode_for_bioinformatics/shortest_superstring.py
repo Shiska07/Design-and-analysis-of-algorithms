@@ -60,13 +60,24 @@ class NaiveSSR:
                 shortest_sup = sup
         return shortest_sup
     
+'''
+NaiveSSR Time Complexity:
+n = no.of reads
+m = max read length
+overlap = O(m) in worst case the while loop runs the full length of 'read_a'
+shortestCommonSuperstring = O(n!*(n-1)*m)
+        n!  = all permutations of list with 'n' objects
+        n-1 = calulate overlap length for all adjacent strings
+        m   = overlap function O(m)
+'''
+    
 
 # greedy recursive solution
 class GreedySSRRecursive:
     def shortestSuperstring(self, words: list[str]) -> str:
         N = len(words)  # no of words in the arr
 
-        def suff(r1, r2):
+        def suff(r1, r2): # O(len(r1))
             '''
             return suffices of r2 if it has a prefix matching with suffuces of r1
             if i = 0(the entire string) and r2[:i] == r1[-i:] is false, the entire string r2 gets stores in the list
@@ -76,7 +87,7 @@ class GreedySSRRecursive:
             return [r2[i:] for i in range(len(r1)+1) if r2[:i] == r1[-i:] or not i][-1]
         
         # recursive case with dynamic programming
-        def dp(bitmask, l):
+        def dp(bitmask, l): # O(n*m)
             '''
             if all words have been used return empty string
             For example in this case bitmask will be 11111 if all strings are used and adding 1 to that gives us 100000.
@@ -94,6 +105,27 @@ class GreedySSRRecursive:
         
         # this part computes all possible superstrings produced by starting from each of the strings
         # dp() recursively returns 
-        return min([words[i] + dp(1<<i,i) for i in range(N)], key=len)   
+        return min([words[i] + dp(1<<i,i) for i in range(N)], key=len) # O(n)  
     
 
+'''
+GreedySSRRecursive Time Complexity:
+n = no.of reads
+m = max read length
+suff = O(m) in worst case the while loop runs the full length of 'r1'
+shortestSuperstring = O((n*3)*m)
+        n = starting with each str in the list as the first str in non-recursive call
+        n^2 = time complexity of recursive program
+        m = suff function O(m)
+'''
+
+# efficient implementation with dr-bruijn graph and dyamic programming
+class GraphDM:
+    pass
+
+
+'''
+GraphDM Time Complexity
+n = no.of reads
+m = max read length
+'''
