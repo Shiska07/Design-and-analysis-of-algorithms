@@ -1,8 +1,68 @@
-# solution with dynamic programming, check traveling salesman problem
-from functools import _lru_cache_wrapper
+import os
+import sys
+import itertools
 
 
-class Solution:
+def readfile(fname):
+    lines = []
+    with open(fname, 'r') as file:
+        lines = file.read().splitlines()
+
+    return lines
+
+# get list of DNA substrings
+file_name = input('provide .txt filename:')
+substr_list = readfile('1001526329.txt')
+
+# naive non-recursive solution
+class NaiveSSR:
+
+    # returns length of the overlap between 'read_a' and 'read_b'
+    def overlap(self, read_a, read_b, min_length=1):
+        start = 0
+        while True:
+            # find returns the first occurence of the substr, in this case the fist character in 'read_b'
+            # read_b[:min_length] = the first char of read_b
+            start = read_a.find(read_b[:min_length], start)
+
+            # if the first character is not present al tll
+            if start == -1:
+                return 0
+
+            # if the first character is present, start = index of 'read_a' where first character of 'read_b' is present
+            # we check if the suffix of 'read_a' from 'start' to end(read_a[start:]) matches with the prefix of 'read_b'
+            if read_b.startswith(read_a[start:]):
+
+                # suff read_a == prefix read_b return overlap length
+                return len(read_a)-start
+
+            # if suff read_a != prefix read _b move .find position to the next character in read_a
+            start += 1
+
+    def shortestCommonSuperstring(string_set):
+        shortest_sup = None
+        # find all permutations of the list components
+        for perm in itertools.permutations(string_set):
+            sup = perm[0]  # superstring starts with first string in the list
+            # start with the second string in the list upto the last one
+            for i in range(len(string_set) - 1):
+                '''
+                here instead of finding the string with the most ovrlap, we just contatenate the adjacent strings(ommiting parts with any overlap). Since we are trying all possible permutations, one of the orders will result in the shortest common superstring.
+                '''
+                # get overlap length of two adjacent strings
+                olen = overlap(perm[i], perm[i+1], min_length=1)
+
+                # concatenate with suffix of perm[i+1] prefix of perm[i+1] is already present as it was the suffix of perm[i]
+                # from the previous iteration
+                sup += perm[i+1][olen:]
+
+            if shortest_sup is None or len(sup) < len(shortest_sup):
+                shortest_sup = sup
+        return shortest_sup
+    
+
+# greedy recursive solution
+class GreedySSRRecursive:
     def shortestSuperstring(self, words: list[str]) -> str:
         N = len(words)  # no of words in the arr
 
@@ -19,7 +79,7 @@ class Solution:
         def dp(bitmask, l):
             '''
             if all words have been used return empty string
-            Fro example in this case bitmask will be 11111 if all strings are used and adding 1 to that gives us 100000.
+            For example in this case bitmask will be 11111 if all strings are used and adding 1 to that gives us 100000.
             N = 5 in this case so 1<<N = 100000. So if all words are used, bitmask + 1 == 1 << N is TRUE.
             '''
             if bitmask+1 == 1<<N: return ""
@@ -36,10 +96,4 @@ class Solution:
         # dp() recursively returns 
         return min([words[i] + dp(1<<i,i) for i in range(N)], key=len)   
     
-SCS = Solution()
 
-word_list = ["catg", "ctaagt", "gcta", "ttca", "atgcatc"]
-# bitmask = [1     , 10      ,  100  ,  1000,   10000]   10000 = picked 'atgcatc as the strarting string
-
-scs_str = SCS.shortestSuperstring(word_list)
-print(f'The shortst superstring is: {scs_str}')
